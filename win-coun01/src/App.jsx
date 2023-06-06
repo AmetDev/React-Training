@@ -22,30 +22,36 @@ const human = (name, age, sex) => {
   )
  
 }
-const onChange = (e) => {
-  var val = e.target.value;
-  this.setState({name: val});
-}
-const handlePrevent = (e)=> {
-  e.preventDefault();
-  
 
-}
+
 const Person = ()=> {
-  const [name, setName] = useState('');
+  const [nameForm, setName] = useState({name: ""});
+  const handleChange = (event) => {
+    const {name, value} = event.target;
+    setName((prevsetName) => ({...prevsetName, [name]: value}))
+  }
+  const hundleMes = (e) => {
+    e.preventDefault();
+    alert({nameForm});
+
+  }
+
   return(
-    <div>  
-    <form onSubmit={handlePrevent}>  
-      <label>Name:</label>  
-      <input type="text" onChange={onChange} />  
-      <input type="submit" value="Отправить" />
+    <div>
+       <form onSubmit={hundleMes}>
+        <label>Enter your name:
+          <input
+            type="text" 
+            value={nameForm.name}
+            onChange={handleChange}
+          />
+        </label>
     </form>  
-    <br />  
-    Name is: {name}  
-  </div>  
+   </div>
   )
 
 }
+
 
 const renderHumans =() => {
   

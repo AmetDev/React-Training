@@ -10,6 +10,8 @@ const handle = (e) =>{
   const {name, value} = e.target
   console.log(name, value)
 }
+
+
   const handleChange = (callback) => {
     setFromData(formData)   
     callback(formData.name)
@@ -19,7 +21,7 @@ const handle = (e) =>{
     <div className="App">
       <input  value={formData.name} onChange={handle}  type="text" id="name" name="name"/>
       <button type="button" onClick={()=>handleChange(clickMe)}>+</button>
-      <div>{clickMe()}</div>
+      <div>{clickMe(formData.name)}</div>
     </div>
   );
 }

@@ -25,27 +25,23 @@ const human = (name, age, sex) => {
 
 
 const Person = ()=> {
-  const [nameForm, setName] = useState({name: ""});
-  const handleChange = (event) => {
-    const {name, value} = event.target;
-    setName((prevsetName) => ({...prevsetName, [name]: value}))
-  }
-  const hundleMes = (e) => {
-    e.preventDefault();
-    alert({nameForm});
+  const [formData, setName] = useState({name: ""});
 
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setName((prevSetName) => ({...prevSetName, [name]: value}));
   }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(`${formData.name}`)
+  }
+
 
   return(
     <div>
-       <form onSubmit={hundleMes}>
-        <label>Enter your name:
-          <input
-            type="text" 
-            value={nameForm.name}
-            onChange={handleChange}
-          />
-        </label>
+       <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Name: </label>
+        <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}/>
     </form>  
    </div>
   )

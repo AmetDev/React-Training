@@ -20,8 +20,8 @@ const human = (name, age, sex) => {
     <div>{sex}</div>
   </>
   )
- 
 }
+
 
 
 const Person = ()=> {
@@ -33,7 +33,10 @@ const Person = ()=> {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`${formData.name}`)
+  }
+  
+  const renderNames = () => {
+    return <div>{formData.name}</div>
   }
   ///text///
 
@@ -42,6 +45,7 @@ const Person = ()=> {
        <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name: </label>
         <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}/>
+          <renderNames/>
     </form>  
    </div>
   )

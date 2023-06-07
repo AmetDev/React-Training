@@ -12,16 +12,6 @@ function COunter() {
   counter = counter - 1;
     setCounter(counter)
 }
-const human = (name, age, sex) => {
-  return (
-    <>
-    <h1>{name}</h1>
-    <div>{age}</div>
-    <div>{sex}</div>
-  </>
-  )
-}
-
 
 
 const Person = ()=> {
@@ -34,28 +24,22 @@ const Person = ()=> {
   const handleSubmit = (e) => {
     e.preventDefault();
   }
-  
+
   const renderNames = () => {
     return <div>{formData.name}</div>
   }
-  ///text///
-
   return(
     <div>
        <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name: </label>
         <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}/>
-          <renderNames/>
+        <div>{renderNames()}</div>
     </form>  
    </div>
   )
 
 }
 
-
-const renderHumans =() => {
-  
-}
   return (
     <div>
       <div className="m-2">{counter}</div>

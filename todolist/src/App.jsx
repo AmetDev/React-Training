@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 function App() {
-  function clickMe() {
-    console.log(formData.name)
-    return <div>{formData.name}</div>
-  }
-  const [formData, setFromData] = useState({name: ""});
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-    setFromData((prevFromData) => ({...prevFromData, [name]: value}))
-    console.log("hello")
+
+  const [formData, setFromData] = useState('');
+  function clickMe(formD) {
+    console.log(formD)
+    return <div>{formD}</div>
+}
+const handle = (e) =>{
+  const {name, value} = e.target
+  console.log(name, value)
+}
+  const handleChange = (callback) => {
+    setFromData(formData)   
+    callback(formData.name)
   }
   
   return (
     <div className="App">
-      <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}/>
-      <button type="button" onClick={clickMe}>+</button>
-      <div>{clickMe}</div>
+      <input  value={formData.name} onChange={handle}  type="text" id="name" name="name"/>
+      <button type="button" onClick={()=>handleChange(clickMe)}>+</button>
+      <div>{clickMe()}</div>
     </div>
   );
 }

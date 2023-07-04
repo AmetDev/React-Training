@@ -1,6 +1,6 @@
-export function CarItem({car}) {
+export function CarItem({ car }) {
     return ( 
-          <div>
+          <div className="text-white">
                   <div className='border inline-block m-5'>
                   <img className='w-52 h-auto ' src={car.img} alt={car.name}></img>
                   <div className='text-white'>{car.name}</div>

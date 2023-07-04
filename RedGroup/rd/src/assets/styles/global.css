@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Noto+Serif:wght@400;600;700;800&display=swap');
+
 body {
     background-color: #111;
+    font-family: 'Golos Text', sans-serif;
+    padding: 30px 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+* {
+    margin: 0;
+    padding: 0;
 }

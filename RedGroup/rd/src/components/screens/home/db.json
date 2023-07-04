@@ -1,8 +1,6 @@
-//import axios from "axios"
-//const axios = require('axios')
-//onst cars = axios.get('http://localhost:4200/cars').then(response => response.data)
-export const cars = [
-    {
+{
+    "cars": [
+      {
         "id": "1",
         "name": "Toyota Camry",
         "price": 122498,
@@ -36,7 +34,7 @@ export const cars = [
         "id": "6",
         "name": "Mercedes-Benz C-Class",
         "price": 518000,
-        "img": "https://www.motortrend.com/uploads/2022/04/2023-Mercedes-AMG-C43-sedan-9.jpg"
+        "img": "https://example.com/mercedes-benz-c-class.jpg"
       },
       {
         "id": "7",
@@ -62,4 +60,5 @@ export const cars = [
         "price": 275000,
         "img": "https://motor.ru/thumb/1500x0/filters:quality(75):no_upscale()/imgs/2021/10/13/07/4955140/ac90b0b71b3a9eee91e75e46aa3949cd7bb7a432.jpg"
       }
-]
+    ]
+  }

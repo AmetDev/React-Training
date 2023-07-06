@@ -11,7 +11,7 @@ const Router = () => {
         <Routes>
             <Route element={<Home/>} path="/"/>
             <Route element={<CarDetail/>} path="/car/:id"/>
-            <Route path='*' element={<div className="white-text">Not found!</div>}/> 
+            <Route path='*' element={<div className="text-white">Not found!</div>}/> 
         </Routes>
         </BrowserRouter>
     )

@@ -1,9 +1,24 @@
 //import car from './car1.jpg'
-import {cars} from './cars.data'
+//import {cars as carsData} from './cars.data'
 import { CarItem } from './car-item/CarItem'
-//import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CreateCarForm from './create-car-form/CreateCarForm';
-export  function Home() {
+import axios from 'axios'
+import { CarService } from '../../../services/car.service';
+export default function Home() {
+
+
+  const [cars, setCars] = useState([]);
+  console.log(cars)
+
+  useEffect(() => {
+    const fetchData = async () => {
+    const data1 = await CarService.getAll();
+    setCars(data1)
+    }
+    fetchData()
+  }, [])
+
   // cars.map(car=> {
   //   key = car.id
   //   console.log(car.name)
@@ -13,7 +28,7 @@ export  function Home() {
   return (
     <div>
     <h1 className='text-white'>Cars catalog</h1>
-    <CreateCarForm/>
+    <CreateCarForm setCars={setCars}/>
     <div>
       {cars.length ? (
         cars.map(car => <CarItem key={car.id} car={car} />)
@@ -24,3 +39,4 @@ export  function Home() {
   </div>
   )
 }
+

@@ -13,24 +13,34 @@ function App() {
     e.preventDefault();
     setArrData(prevArr => ([...prevArr, {id:arrData.length+1, name:formData, submittedData: formData}]))
     //setFormData((prevData) => ({ ...prevData, submittedData: prevData.name, name: "" }));
-    
+
   };
+  const delValue = (index) => {
+    setArrData(arrData.filter((_, i) => i !== index));
+  }
+  console.log(arrData)
   return (
-    <div className="App">
-      <form onSubmit={handleSubmit}>
-        <input
+    <main className="bg-slate-500 flex justify-center">
+       <div className="">
+      <form className="" onSubmit={handleSubmit}>
+        <input className="rounded-xl"
           type="text"
           id="name"
           name="name"
           value={formData.name}
           onChange={handleChange}
         />
-        <button type="submit">+</button>
+        <button className="bg-cyan-400 rounded-xl pr-2 pl-2"type="submit">add</button>
       </form>
-      <div>{arrData.map((ele) => (
-        <li key={ele.id}>{ele.name}</li>
-      ))}</div>
+      <ul>{arrData.map((ele) => (
+        <li className="mt-2" key={ele.id+1}>{ele.name}
+        <button onClick={() => delValue(ele.id+1)} className="border ml-3">del</button>
+        </li>
+        
+      ))}</ul>
     </div>
+    </main>
+   
   );
 }
 

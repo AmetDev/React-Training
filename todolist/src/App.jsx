@@ -33,8 +33,8 @@ function App() {
         <button className="bg-cyan-400 rounded-xl pr-2 pl-2"type="submit">add</button>
       </form>
       <ul>{arrData.map((ele) => (
-        <li className="mt-2" key={ele.id+1}>{ele.name}
-        <button onClick={() => delValue(ele.id+1)} className="border ml-3">del</button>
+        <li className="mt-2" key={ele.id-1}>{ele.name}
+        <button onClick={() => delValue(ele.id-1)} className="border ml-3">del</button>
         </li>
         
       ))}</ul>

@@ -1,32 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { data } from "./data";
 
 function App() {
-  const [formData, setFormData] = useState({ name: "", submittedData: "" });
+  const [formData, setFormData] = useState('')
+  const [arrData, setArrData] = useState(data);
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    const name = e.target.value;
+    setFormData(name);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormData((prevData) => ({ ...prevData, submittedData: prevData.name, name: "" }));
-  };
- 
+    setArrData(prevArr => ([...prevArr, {id:arrData.length+1, name:formData, submittedData: formData}]))
+    //setFormData((prevData) => ({ ...prevData, submittedData: prevData.name, name: "" }));
 
+  };
+  const delValue = (index) => {
+    setArrData(arrData.filter((_, i) => i !== index));
+  }
+  console.log(arrData)
   return (
-    <div className="App">
-      <form onSubmit={handleSubmit}>
-        <input
+    <main className="bg-slate-500 flex justify-center">
+       <div className="">
+      <form className="" onSubmit={handleSubmit}>
+        <input className="rounded-xl"
           type="text"
           id="name"
           name="name"
           value={formData.name}
           onChange={handleChange}
         />
-        <button type="submit">+</button>
+        <button className="bg-cyan-400 rounded-xl pr-2 pl-2"type="submit">add</button>
       </form>
-      <div>{formData.submittedData}</div>
+      <ul>{arrData.map((ele) => (
+        <li className="mt-2" key={ele.id+1}>{ele.name}
+        <button onClick={() => delValue(ele.id+1)} className="border ml-3">del</button>
+        </li>
+        
+      ))}</ul>
     </div>
+    </main>
+   
   );
 }
 

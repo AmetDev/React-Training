@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { data } from "./data";
 
 function App() {
-  const [formData, setFormData] = useState({ name: "", submittedData: "" });
+  const [formData, setFormData] = useState('')
+  const [arrData, setArrData] = useState(data);
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    const name = e.target.value;
+    setFormData(name);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormData((prevData) => ({ ...prevData, submittedData: prevData.name, name: "" }));
+    setArrData(prevArr => ([...prevArr, {id:arrData.length+1, name:formData, submittedData: formData}]))
+    //setFormData((prevData) => ({ ...prevData, submittedData: prevData.name, name: "" }));
+    
   };
- 
-
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
@@ -25,7 +27,9 @@ function App() {
         />
         <button type="submit">+</button>
       </form>
-      <div>{formData.submittedData}</div>
+      <div>{arrData.map((ele) => (
+        <li key={ele.id}>{ele.name}</li>
+      ))}</div>
     </div>
   );
 }

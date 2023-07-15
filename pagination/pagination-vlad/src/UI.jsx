@@ -1,13 +1,16 @@
 import { Pagination } from "./App";
 
 export function UI(fetching) {
-    //   fetching.map(element => {
-    //     return (
-    //         <div>
-    //             {element}
-    //         </div>
-    //     )
-    //   })
-    const todos = fetching.map((el) => <div key={el.id}>{el}</div>)
-    return todos
+    let ar1 = fetching.arr
+    console.log(ar1) 
+    return (
+        <div>
+            {ar1.map(el => el.map(el1 => 
+            <div key={el1.id}>
+                 <div>{el1.title}</div>
+                <img src={el1.thumbnailUrl} alt="sijdf"></img>     
+            </div>
+            ))}
+        </div>
+    )
 }

@@ -19,7 +19,7 @@ function Catagories() {
 			<ul>
 				{categories.map((el, index) => {
 					return (
-						<li
+						<li key={index}
 							onClick={() => onClickCategory(index)}
 							className={activeIndex === index ? 'active' : ''}
 						>

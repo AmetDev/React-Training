@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-function PizzaBlock({title, price, image, sizes, types}) {
+function PizzaBlock({id, title, price, imageUrl, sizes, types}) {
 	//const [pizzaCount ,setPizzaCount] = useState(0)
 	//const onClickButton = () => {
 	//	setPizzaCount(pizzaCount+1)
@@ -13,7 +13,7 @@ function PizzaBlock({title, price, image, sizes, types}) {
 		<div className='pizza-block'>
 		<img
 			className='pizza-block__image'
-			src={image}
+			src={imageUrl}
 			alt='Pizza'
 		/>
 		<h4 className='pizza-block__title'>{title}</h4>
@@ -21,14 +21,14 @@ function PizzaBlock({title, price, image, sizes, types}) {
 			<ul>
 					{types.map((typeId) => {
 						return (
-							<li onClick={() => setActiveType(typeId)} className={activeType === typeId? 'active': '' }>{typeNames[typeId]}</li>
+							<li key={typeId} onClick={() => setActiveType(typeId)} className={activeType === typeId? 'active': '' }>{typeNames[typeId]}</li>
 						)
 					})}
 			</ul>
 			<ul>
 				{sizes.map((size, index) => {
 					return (
-						<li onClick={()=> setActiveSize(index)} className={activeSize === index? 'active': '' }>
+						<li key={index} onClick={()=> setActiveSize(index)} className={activeSize === index? 'active': '' }>
 							{size} см.
 						</li>
 					)

@@ -7,16 +7,15 @@ import Sort from './components/Sort.jsx'
 import PizzaBlock from "./components/PizzaBlock.jsx"
 
 
-import pizzas from "./assets/pizzas.json"
 
 function App() {
-	const [pizza, setPizza] = React.useState([]);
+	const [pizzas, setPizza] = React.useState([]);
 	React.useEffect(()=>{
 		
 		fetch("https://64c4f551c853c26efada564f.mockapi.io/items").then((response)=> {return response.json()}).then((arr) => setPizza(arr))
 
 	}, [])
-	console.log(pizza)
+	console.log(pizzas)
 
 	return (
 		<div className='wrapper'>

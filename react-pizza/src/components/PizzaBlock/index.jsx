@@ -2,10 +2,6 @@ import React from 'react';
 
 
 function PizzaBlock({id, title, price, imageUrl, sizes, types}) {
-	//const [pizzaCount ,setPizzaCount] = useState(0)
-	//const onClickButton = () => {
-	//	setPizzaCount(pizzaCount+1)
-	//}
 	const typeNames = ['тонкое', 'традиционное']
 	const [activeType, setActiveType] = React.useState(0);
 	const [activeSize, setActiveSize] = React.useState(0)

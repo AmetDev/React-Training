@@ -33,11 +33,3 @@ function Catagories() {
 }
 export default Catagories
 
-{
-	/*	<li
-	onClick={() => onClickCategory(0)}
-	className={activeIndex === 0 ? 'active' : ''}
-	>
-	Все
-</li>*/
-}

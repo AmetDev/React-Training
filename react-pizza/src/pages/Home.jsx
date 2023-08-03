@@ -8,7 +8,7 @@ const Home = () => {
 	const [pizzas, setPizza] = React.useState([])
 	const [isLoading, setIsLoading] = React.useState(false)
 	const [categoriesId, setCategoriesId] = React.useState(0)
-	const [sortType, setSortType] = React.useState(0)
+	const [sortType, setSortType] = React.useState({ name: 'популярности', propertyObjName: 'rating', orderProperty: 'desc', index: 0 })
 	const fakeArr = [
 		[undefined],
 		[undefined],
@@ -21,8 +21,7 @@ const Home = () => {
 	React.useEffect(() => {
 		setIsLoading(true)
 		fetch(
-			'https://64c4f551c853c26efada564f.mockapi.io/items?'+'SortBy='+sortType+'&category=' +
-				categoriesId 
+			'https://64c4f551c853c26efada564f.mockapi.io/items?'+'category='+categoriesId
 		)
 			.then(response => {
 				return response.json()

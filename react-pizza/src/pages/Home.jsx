@@ -8,7 +8,12 @@ const Home = () => {
 	const [pizzas, setPizza] = React.useState([])
 	const [isLoading, setIsLoading] = React.useState(false)
 	const [categoriesId, setCategoriesId] = React.useState(0)
-	const [sortType, setSortType] = React.useState({ name: 'популярности', propertyObjName: 'rating', orderProperty: 'desc', index: 0 })
+	const [sortType, setSortType] = React.useState({
+		name: 'популярности',
+		propertyObjName: 'rating',
+		orderProperty: 'desc',
+		index: 0,
+	})
 	const fakeArr = [
 		[undefined],
 		[undefined],
@@ -17,11 +22,16 @@ const Home = () => {
 		[undefined],
 	]
 	console.log(categoriesId)
-	console.log('typesort',sortType)
+	console.log('typesort', sortType)
 	React.useEffect(() => {
 		setIsLoading(true)
+		const categorFunc = () => sortType.index===0?'':`&category=${categoriesId}`
 		fetch(
-			'https://64c4f551c853c26efada564f.mockapi.io/items?'+'category='+categoriesId
+			'https://64c4f551c853c26efada564f.mockapi.io/items?' +
+				'sortBy=' +
+				sortType.propertyObjName +
+				'&order='+sortType.orderProperty+
+				categorFunc()
 		)
 			.then(response => {
 				return response.json()

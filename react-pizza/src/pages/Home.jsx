@@ -6,7 +6,9 @@ import Sort from '../components/Sort.jsx'
 
 const Home = () => {
 	const [pizzas, setPizza] = React.useState([])
-	const [isLoading, setIsLoading] = React.useState(true)
+	const [isLoading, setIsLoading] = React.useState(false)
+	const [categoriesId, setCategoriesId] = React.useState(0)
+	const [sortType, setSortType] = React.useState(0)
 	const fakeArr = [
 		[undefined],
 		[undefined],
@@ -14,22 +16,35 @@ const Home = () => {
 		[undefined],
 		[undefined],
 	]
+	console.log(categoriesId)
+	console.log('typesort',sortType)
 	React.useEffect(() => {
-		fetch('https://64c4f551c853c26efada564f.mockapi.io/items')
+		setIsLoading(true)
+		fetch(
+			'https://64c4f551c853c26efada564f.mockapi.io/items?'+'SortBy='+sortType+'&category=' +
+				categoriesId 
+		)
 			.then(response => {
 				return response.json()
 			})
-			.then(arr => setPizza(arr))
-		setIsLoading(false)
+			.then(arr => {
+				setPizza(arr)
+				setIsLoading(false)
+			})
+
 		window.scrollTo(0, 0)
-	}, [])
+	}, [categoriesId, sortType])
+	console.log(isLoading)
 	return (
 		<>
 			<div className='container'>
 				{' '}
 				<div className='content__top'>
-					<Catagories />
-					<Sort />
+					<Catagories
+						value={categoriesId}
+						onClickCategory={i => setCategoriesId(i)}
+					/>
+					<Sort selectValue={sortType} onClickSort={i => setSortType(i)} />
 				</div>
 				<h2 className='content__title'>Все пиццы</h2>
 				<div className='content__items'>
@@ -40,7 +55,6 @@ const Home = () => {
 						: pizzas.map(obj => {
 								return <PizzaBlock key={obj.id} {...obj} />
 						  })}
-					)
 				</div>
 			</div>
 		</>

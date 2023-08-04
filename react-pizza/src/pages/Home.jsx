@@ -25,13 +25,8 @@ const Home = () => {
 	console.log('typesort', sortType)
 	React.useEffect(() => {
 		setIsLoading(true)
-		const categorFunc = () => sortType.index===0?'':`&category=${categoriesId}`
 		fetch(
-			'https://64c4f551c853c26efada564f.mockapi.io/items?' +
-				'sortBy=' +
-				sortType.propertyObjName +
-				'&order='+sortType.orderProperty+
-				categorFunc()
+			'https://64c4f551c853c26efada564f.mockapi.io/items?' +`${categoriesId===0?'':`category=${categoriesId}`}`+`&sortBy=${sortType.propertyObjName}&order=desc`
 		)
 			.then(response => {
 				return response.json()

@@ -4,9 +4,12 @@ function Sort({ selectValue, onClickSort }) {
 	const [open, setOpen] = React.useState(false)
 
 	const objName = [
-		{ name: 'популярности', propertyObjName: 'rating', orderProperty: 'desc', index: 0 },
-		{ name: 'цене', propertyObjName: 'price', orderProperty: 'desc',  index: 1 },
-		{ name: 'алфавиту', propertyObjName: 'title', orderProperty: 'desc',  index: 2 },
+		{ name: 'популярности(DESC)', propertyObjName: 'rating', orderProperty: 'desc', index: 0 },
+		{ name: 'популярности(ASC)', propertyObjName: 'rating', orderProperty: 'asc', index: 1 },
+		{ name: 'цене(DESC)', propertyObjName: 'price', orderProperty: 'desc',  index: 2 },
+		{ name: 'цене(ASC)', propertyObjName: 'price', orderProperty: 'asc',  index: 3 },
+		{ name: 'алфавиту(DESC)', propertyObjName: 'title', orderProperty: 'desc',  index: 4 },
+		{ name: 'алфавиту(ASC)', propertyObjName: 'title', orderProperty: 'asc',  index: 5 },
 	]
 	const onClickItem = (el) => {
 		onClickSort(el)

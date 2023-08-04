@@ -26,7 +26,7 @@ const Home = () => {
 	React.useEffect(() => {
 		setIsLoading(true)
 		fetch(
-			'https://64c4f551c853c26efada564f.mockapi.io/items?' +`${categoriesId===0?'':`category=${categoriesId}`}`+`&sortBy=${sortType.propertyObjName}&order=desc`
+			'https://64c4f551c853c26efada564f.mockapi.io/items?' +`${categoriesId===0?'':`category=${categoriesId}`}`+`&sortBy=${sortType.propertyObjName}&order=${sortType.orderProperty}`
 		)
 			.then(response => {
 				return response.json()

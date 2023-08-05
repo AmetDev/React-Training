@@ -7,8 +7,8 @@ const Pagination = ({currentPage, setCurrentPage}) => {
 			className={styles.root}
 			breakLabel='...'
 			nextLabel='>'
-			onPageChange={event => setCurrentPage(event)}
-			pageRangeDisplayed={8}
+			onPageChange={event => setCurrentPage(event.selected+1)}
+			pageRangeDisplayed={4}
 			pageCount={3}
 			previousLabel='<'
 			renderOnZeroPageCount={null}

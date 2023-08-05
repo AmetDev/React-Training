@@ -16,7 +16,7 @@ const Home = ({ searchValue, setSearchValue }) => {
 		orderProperty: 'desc',
 		index: 0,
 	})
-	console.log('cur', currentPage.selected+1)
+	console.log('cur', currentPage.selected)
 	const fakeArr = [
 		[undefined],
 		[undefined],
@@ -32,7 +32,7 @@ const Home = ({ searchValue, setSearchValue }) => {
 		fetch(
 			'https://64c4f551c853c26efada564f.mockapi.io/items?' +
 				`${categoriesId === 0 ? '' : `category=${categoriesId}`}` +
-				`&page=1&limit=4` +
+				`&page=${currentPage}&limit=4` +
 				`&sortBy=${sortType.propertyObjName}&order=${sortType.orderProperty}` +
 				searchsValue
 		)
@@ -45,7 +45,7 @@ const Home = ({ searchValue, setSearchValue }) => {
 			})
 
 		window.scrollTo(0, 0)
-	}, [categoriesId, sortType, searchValue])
+	}, [categoriesId, sortType, searchValue, currentPage])
 	const pizzasFilter = pizzas.filter(obj => {
 		return obj.title.toLowerCase().includes(searchValue.toLowerCase())
 	})

@@ -3,17 +3,20 @@ import Catagories from '../components/Catagories.jsx'
 import PizzaSkeleton from '../components/PizzaBlock/Skeleton'
 import PizzaBlock from '../components/PizzaBlock/index.jsx'
 import Sort from '../components/Sort.jsx'
+import Pagination from '../components/pagination/index.jsx'
 
-const Home = () => {
+const Home = ({ searchValue, setSearchValue }) => {
 	const [pizzas, setPizza] = React.useState([])
 	const [isLoading, setIsLoading] = React.useState(false)
 	const [categoriesId, setCategoriesId] = React.useState(0)
+	const [currentPage, setCurrentPage] = React.useState(1)
 	const [sortType, setSortType] = React.useState({
 		name: 'популярности',
 		propertyObjName: 'rating',
 		orderProperty: 'desc',
 		index: 0,
 	})
+	console.log('cur', currentPage.selected)
 	const fakeArr = [
 		[undefined],
 		[undefined],
@@ -23,10 +26,15 @@ const Home = () => {
 	]
 	console.log(categoriesId)
 	console.log('typesort', sortType)
+	const searchsValue = searchValue ? `&search=${searchValue}` : ''
 	React.useEffect(() => {
 		setIsLoading(true)
 		fetch(
-			'https://64c4f551c853c26efada564f.mockapi.io/items?' +`${categoriesId===0?'':`category=${categoriesId}`}`+`&sortBy=${sortType.propertyObjName}&order=${sortType.orderProperty}`
+			'https://64c4f551c853c26efada564f.mockapi.io/items?' +
+				`${categoriesId === 0 ? '' : `category=${categoriesId}`}` +
+				`&page=${currentPage}&limit=4` +
+				`&sortBy=${sortType.propertyObjName}&order=${sortType.orderProperty}` +
+				searchsValue
 		)
 			.then(response => {
 				return response.json()
@@ -37,8 +45,14 @@ const Home = () => {
 			})
 
 		window.scrollTo(0, 0)
-	}, [categoriesId, sortType])
-	console.log(isLoading)
+	}, [categoriesId, sortType, searchValue, currentPage])
+	const pizzasFilter = pizzas.filter(obj => {
+		return obj.title.toLowerCase().includes(searchValue.toLowerCase())
+	})
+	pizzasFilter.map(obj => {
+		return <PizzaBlock key={obj.id} {...obj} />
+	})
+
 	return (
 		<>
 			<div className='container'>
@@ -56,10 +70,15 @@ const Home = () => {
 						? fakeArr.map(obj => {
 								return <PizzaSkeleton key={obj.id} {...obj} />
 						  })
+						: pizzasFilter
+						? pizzasFilter.map(obj => {
+								return <PizzaBlock key={obj.id} {...obj} />
+						  })
 						: pizzas.map(obj => {
 								return <PizzaBlock key={obj.id} {...obj} />
 						  })}
 				</div>
+				<Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
 			</div>
 		</>
 	)

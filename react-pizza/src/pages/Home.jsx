@@ -3,17 +3,20 @@ import Catagories from '../components/Catagories.jsx'
 import PizzaSkeleton from '../components/PizzaBlock/Skeleton'
 import PizzaBlock from '../components/PizzaBlock/index.jsx'
 import Sort from '../components/Sort.jsx'
+import Pagination from '../components/pagination/index.jsx'
 
 const Home = ({ searchValue, setSearchValue }) => {
 	const [pizzas, setPizza] = React.useState([])
 	const [isLoading, setIsLoading] = React.useState(false)
 	const [categoriesId, setCategoriesId] = React.useState(0)
+	const [currentPage, setCurrentPage] = React.useState(1)
 	const [sortType, setSortType] = React.useState({
 		name: 'популярности',
 		propertyObjName: 'rating',
 		orderProperty: 'desc',
 		index: 0,
 	})
+	console.log('cur', currentPage.selected+1)
 	const fakeArr = [
 		[undefined],
 		[undefined],
@@ -29,6 +32,7 @@ const Home = ({ searchValue, setSearchValue }) => {
 		fetch(
 			'https://64c4f551c853c26efada564f.mockapi.io/items?' +
 				`${categoriesId === 0 ? '' : `category=${categoriesId}`}` +
+				`&page=1&limit=4` +
 				`&sortBy=${sortType.propertyObjName}&order=${sortType.orderProperty}` +
 				searchsValue
 		)
@@ -42,14 +46,13 @@ const Home = ({ searchValue, setSearchValue }) => {
 
 		window.scrollTo(0, 0)
 	}, [categoriesId, sortType, searchValue])
-	console.log(isLoading)
 	const pizzasFilter = pizzas.filter(obj => {
 		return obj.title.toLowerCase().includes(searchValue.toLowerCase())
 	})
 	pizzasFilter.map(obj => {
 		return <PizzaBlock key={obj.id} {...obj} />
 	})
-	console.log(pizzasFilter)
+
 	return (
 		<>
 			<div className='container'>
@@ -75,6 +78,7 @@ const Home = ({ searchValue, setSearchValue }) => {
 								return <PizzaBlock key={obj.id} {...obj} />
 						  })}
 				</div>
+				<Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
 			</div>
 		</>
 	)

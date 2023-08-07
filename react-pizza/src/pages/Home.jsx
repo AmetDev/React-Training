@@ -6,6 +6,7 @@ import Sort from '../components/Sort.jsx'
 import Pagination from '../components/pagination/index.jsx'
 import { SearchContext } from '../App.js'
 
+
 const Home = () => {
 	const {searchValue} = React.useContext(SearchContext)
 	const [pizzas, setPizza] = React.useState([])

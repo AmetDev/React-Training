@@ -1,26 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  count: 0,
-}
+  categoriesId: 0,
+  sort: {
+    name: 'популярности',
+    propertyObjName: 'rating',
 
-export const counterSlice = createSlice({
+  }
+};
+
+const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.count += 1
-    },
-    decrement: (state) => {
-      state.count -= 1
-    },
-    incrementByAmount: (state, action) => {
-      state.count += action.payload
+    setCaterId(state, action) {
+      console.log(action)
+      state.categoriesId = action.payload;
+
     },
   },
-})
+});
 
-// Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
+export const { setCaterId } = filterSlice.actions;
 
-export default counterSlice.reducer
+export default filterSlice.reducer;

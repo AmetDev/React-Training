@@ -18,19 +18,12 @@ const Home = () => {
 	const dispatch = useDispatch()
 	const categoriesId = useSelector(state => state.filter.categoryId);
 	console.log('cater', categoriesId)
-	const setCategoriesId = () => { };
 	const { searchValue } = React.useContext(SearchContext)
 	const [pizzas, setPizza] = React.useState([])
 	const [isLoading, setIsLoading] = React.useState(false)
 	//const [categoriesId, setCategoriesId] = React.useState(0)
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const [sortType, setSortType] = React.useState({
-		name: 'популярности',
-		propertyObjName: 'rating',
-		orderProperty: 'desc',
-		index: 0,
-	})
-	console.log('cur', currentPage.selected)
+	const sortType = useSelector(state => state.filter.sort)
 	const fakeArr = [
 		[undefined],
 		[undefined],
@@ -74,7 +67,7 @@ const Home = () => {
 						value={categoriesId}
 						onClickCategory={i => onClickCategory(i)}
 					/>
-					<Sort selectValue={sortType} onClickSort={i => setSortType(i)} />
+					<Sort />
 				</div>
 				<h2 className='content__title'>Все пиццы</h2>
 				<div className='content__items'>

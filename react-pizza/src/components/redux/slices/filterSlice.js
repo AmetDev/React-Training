@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  categoriesId: 0,
+  categoryId: 0,
   sort: {
     name: 'популярности',
     propertyObjName: 'rating',
@@ -14,8 +14,8 @@ const filterSlice = createSlice({
   initialState,
   reducers: {
     setCaterId(state, action) {
-      console.log(action)
-      state.categoriesId = action.payload;
+      console.log('action', action)
+      state.categoryId = action.payload;
 
     },
   },

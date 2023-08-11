@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCaterId } from '../components/redux/slices/filterSlice'
+import { setCaterId, setSortType } from '../components/redux/slices/filterSlice'
 import Catagories from '../components/Catagories.jsx'
 import PizzaSkeleton from '../components/PizzaBlock/Skeleton'
 import PizzaBlock from '../components/PizzaBlock/index.jsx'
@@ -11,25 +11,26 @@ import { SearchContext } from '../App.js'
 
 
 const Home = () => {
-	const onClickCategory = (id) => {
-		console.log(id)
-		dispatch(setCaterId(id))
-	}
 	const dispatch = useDispatch()
 	const categoriesId = useSelector(state => state.filter.categoryId);
-	console.log('cater', categoriesId)
-	const setCategoriesId = () => { };
+	const sortType = useSelector(state => state.filter.sort)
+	const onClickCategory = (id) => {
+		dispatch(setCaterId(id))
+	}
+	const onSortEvent = (id) => {
+		dispatch(setSortType(id))
+	}
 	const { searchValue } = React.useContext(SearchContext)
 	const [pizzas, setPizza] = React.useState([])
 	const [isLoading, setIsLoading] = React.useState(false)
 	//const [categoriesId, setCategoriesId] = React.useState(0)
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const [sortType, setSortType] = React.useState({
-		name: 'популярности',
-		propertyObjName: 'rating',
-		orderProperty: 'desc',
-		index: 0,
-	})
+	//const [sortType, setSortType] = React.useState({
+	//	name: 'популярности',
+	//	propertyObjName: 'rating',
+	//orderProperty: 'desc',
+	//index: 0,
+	//})
 	console.log('cur', currentPage.selected)
 	const fakeArr = [
 		[undefined],
@@ -74,7 +75,7 @@ const Home = () => {
 						value={categoriesId}
 						onClickCategory={i => onClickCategory(i)}
 					/>
-					<Sort selectValue={sortType} onClickSort={i => setSortType(i)} />
+					<Sort selectValue={sortType} onClickSort={i => onSortEvent(i)} />
 				</div>
 				<h2 className='content__title'>Все пиццы</h2>
 				<div className='content__items'>

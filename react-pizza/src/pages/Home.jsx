@@ -22,16 +22,7 @@ const Home = () => {
 	const { searchValue } = React.useContext(SearchContext)
 	const [pizzas, setPizza] = React.useState([])
 	const [isLoading, setIsLoading] = React.useState(false)
-	//const [categoriesId, setCategoriesId] = React.useState(0)
 	const [currentPage, setCurrentPage] = React.useState(1)
-	//const [sortType, setSortType] = React.useState({
-	//	name: 'популярности',
-	//	propertyObjName: 'rating',
-	//orderProperty: 'desc',
-	//index: 0,
-	//})
-	//
-	console.log('cur', currentPage.selected)
 	const fakeArr = [
 		[undefined],
 		[undefined],

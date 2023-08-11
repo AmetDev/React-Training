@@ -5,6 +5,7 @@ import { setSortType } from './redux/slices/filterSlice'
 function Sort() {
 	const [open, setOpen] = React.useState(false)
 
+
 	const objName = [
 		{ name: 'популярности(DESC)', propertyObjName: 'rating', orderProperty: 'desc', index: 0 },
 		{ name: 'популярности(ASC)', propertyObjName: 'rating', orderProperty: 'asc', index: 1 },
@@ -13,12 +14,13 @@ function Sort() {
 		{ name: 'алфавиту(DESC)', propertyObjName: 'title', orderProperty: 'desc', index: 4 },
 		{ name: 'алфавиту(ASC)', propertyObjName: 'title', orderProperty: 'asc', index: 5 },
 	]
-	const sortType = useSelector(state => state.filter.sort)
+	const selectValue = useSelector(state => state.filter.sort)
+	const dispatch = useDispatch();
 	const OnClickItem = (el) => {
-		useDispatch(setSortType(el))
+		dispatch(setSortType(el))
 		setOpen(false)
 	}
-
+	//
 	return (
 		<div className='sort'>
 			<div className='sort__label'>
@@ -36,7 +38,7 @@ function Sort() {
 				</svg>
 				<b>Сортировка по:</b>
 				<span onClick={() => setOpen(prev => (prev === true ? false : true))}>
-					{sortType.name}
+					{selectValue.name}
 				</span>
 			</div>
 			{open && (
@@ -47,7 +49,7 @@ function Sort() {
 								<li
 									onClick={() => OnClickItem(el)}
 									key={el.index}
-									className={sortType.index === el.index ? 'active' : ''}
+									className={selectValue.index === el.index ? 'active' : ''}
 								>
 									{el.name}
 								</li>

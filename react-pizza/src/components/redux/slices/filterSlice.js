@@ -5,6 +5,8 @@ const initialState = {
   sort: {
     name: 'популярности',
     propertyObjName: 'rating',
+    orderProperty: 'desc',
+    index: 0,
 
   }
 };
@@ -20,7 +22,6 @@ const filterSlice = createSlice({
     setSortType(state, action) {
       state.sort = action.payload
     }
-    ,
   },
 });
 

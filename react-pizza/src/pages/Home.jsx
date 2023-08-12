@@ -12,8 +12,9 @@ import { SearchContext } from '../App.js'
 
 const Home = () => {
 	const dispatch = useDispatch()
-	const categoriesId = useSelector(state => state.filter.categoryId);
-	const sortType = useSelector(state => state.filter.sort)
+	const { categoryId, sort } = useSelector(state => state.filter);
+	const sortType = sort;
+	const categoriesId = categoryId;
 
 	const onClickCategory = (id) => {
 		dispatch(setCaterId(id))

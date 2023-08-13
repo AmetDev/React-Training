@@ -2,11 +2,8 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSortType } from './redux/slices/filterSlice'
 
-function Sort() {
-	const [open, setOpen] = React.useState(false)
-
-
-	const objName = [
+	
+  export const objName = [
 		{ name: 'популярности(DESC)', propertyObjName: 'rating', orderProperty: 'desc', index: 0 },
 		{ name: 'популярности(ASC)', propertyObjName: 'rating', orderProperty: 'asc', index: 1 },
 		{ name: 'цене(DESC)', propertyObjName: 'price', orderProperty: 'desc', index: 2 },
@@ -14,12 +11,16 @@ function Sort() {
 		{ name: 'алфавиту(DESC)', propertyObjName: 'title', orderProperty: 'desc', index: 4 },
 		{ name: 'алфавиту(ASC)', propertyObjName: 'title', orderProperty: 'asc', index: 5 },
 	]
-	const selectValue = useSelector(state => state.filter.sort)
+function Sort() {
+	const [open, setOpen] = React.useState(false)
+  const {sort}= useSelector(state => state.filter)
 	const dispatch = useDispatch();
 	const OnClickItem = (el) => {
 		dispatch(setSortType(el))
 		setOpen(false)
 	}
+
+
 	//
 	return (
 		<div className='sort'>
@@ -38,7 +39,7 @@ function Sort() {
 				</svg>
 				<b>Сортировка по:</b>
 				<span onClick={() => setOpen(prev => (prev === true ? false : true))}>
-					{selectValue.name}
+					{sort.name}
 				</span>
 			</div>
 			{open && (
@@ -49,7 +50,7 @@ function Sort() {
 								<li
 									onClick={() => OnClickItem(el)}
 									key={el.index}
-									className={selectValue.index === el.index ? 'active' : ''}
+									className={sort.index === el.index ? 'active' : ''}
 								>
 									{el.name}
 								</li>

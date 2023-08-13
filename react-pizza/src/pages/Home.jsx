@@ -7,12 +7,13 @@ import PizzaBlock from '../components/PizzaBlock/index.jsx'
 import Sort from '../components/Sort.jsx'
 import Pagination from '../components/pagination/index.jsx'
 import { SearchContext } from '../App.js'
+import axios from 'axios'
 
 
 
 const Home = () => {
 	const dispatch = useDispatch()
-	const { categoryId, sort } = useSelector(state => state.filter);
+	const { categoryId, sort, currentPage } = useSelector(state => state.filter);
 	const sortType = sort;
 	const categoriesId = categoryId;
 
@@ -23,7 +24,7 @@ const Home = () => {
 	const { searchValue } = React.useContext(SearchContext)
 	const [pizzas, setPizza] = React.useState([])
 	const [isLoading, setIsLoading] = React.useState(false)
-	const [currentPage, setCurrentPage] = React.useState(1)
+	//const [currentPage, setCurrentPage] = React.useState(1)
 	const fakeArr = [
 		[undefined],
 		[undefined],
@@ -34,7 +35,7 @@ const Home = () => {
 	const searchsValue = searchValue ? `&search=${searchValue}` : ''
 	React.useEffect(() => {
 		setIsLoading(true)
-		fetch(
+		axios.get(
 			'https://64c4f551c853c26efada564f.mockapi.io/items?' +
 			`${categoriesId === 0 ? '' : `category=${categoriesId}`}` +
 			`&page=${currentPage}&limit=4` +
@@ -42,7 +43,7 @@ const Home = () => {
 			searchsValue
 		)
 			.then(response => {
-				return response.json()
+				return response.data
 			})
 			.then(arr => {
 				setPizza(arr)
@@ -60,6 +61,7 @@ const Home = () => {
 
 	return (
 		<>
+      
 			<div className='container'>
 				{' '}
 				<div className='content__top'>
@@ -83,7 +85,7 @@ const Home = () => {
 								return <PizzaBlock key={obj.id} {...obj} />
 							})}
 				</div>
-				<Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
+				<Pagination  />
 			</div>
 		</>
 	)

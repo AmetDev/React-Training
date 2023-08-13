@@ -20,8 +20,9 @@ function App() {
 				<div className='content'>
 					<Routes>
 						<Route path='/' element={<Home />} />
-						<Route path='*' element={<NoteFoundBlock />} />
-						<Route path='cart' element={<Cart />} />
+						<Route path='*' element={<NoteFoundBlock/>} />
+						<Route path='cart' element={<Cart/>} />
+						
 					</Routes>
 				</div>
 			</SearchContext.Provider>
@@ -29,4 +30,5 @@ function App() {
 	)
 }
 
-export default App
+export default App 
+

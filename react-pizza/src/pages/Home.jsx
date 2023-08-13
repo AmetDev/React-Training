@@ -60,6 +60,7 @@ const Home = () => {
 
 	return (
 		<>
+      
 			<div className='container'>
 				{' '}
 				<div className='content__top'>

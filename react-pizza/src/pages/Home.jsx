@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCaterId } from '../components/redux/slices/filterSlice'
 import Catagories from '../components/Catagories.jsx'
@@ -8,11 +8,13 @@ import Sort from '../components/Sort.jsx'
 import Pagination from '../components/pagination/index.jsx'
 import { SearchContext } from '../App.js'
 import axios from 'axios'
-
-
+import qs from 'qs'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
 	const dispatch = useDispatch()
+  const navigate = useNavigate()
+
 	const { categoryId, sort, currentPage } = useSelector(state => state.filter);
 	const sortType = sort;
 	const categoriesId = categoryId;
@@ -55,6 +57,14 @@ const Home = () => {
 	const pizzasFilter = pizzas.filter(obj => {
 		return obj.title.toLowerCase().includes(searchValue.toLowerCase())
 	})
+  useEffect(() => {
+    const queryString = qs.stringify({
+      sortPropety: sortType.orderProperty,
+      categoriesId,
+      currentPage,
+    })
+    navigate(`?${queryString}`) 
+  }, [categoriesId, sortType.orderProperty, currentPage])
 	pizzasFilter.map(obj => {
 		return <PizzaBlock key={obj.id} {...obj} />
 	})

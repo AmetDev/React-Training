@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSortType } from './redux/slices/filterSlice'
 
@@ -20,10 +20,14 @@ function Sort() {
 		setOpen(false)
 	}
 
-
-	//
+  const sortRef  = useRef();
+  useEffect(()=>{
+    document.body.addEventListener('click', event => {
+      console.log(event)
+    })
+  }, [])
 	return (
-		<div className='sort'>
+		<div ref={sortRef} className='sort'>
 			<div className='sort__label'>
 				<svg
 					width='10'

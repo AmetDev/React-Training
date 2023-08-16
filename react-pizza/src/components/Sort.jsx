@@ -22,8 +22,12 @@ function Sort() {
 
   const sortRef  = useRef();
   useEffect(()=>{
+    console.log(sortRef.current)
     document.body.addEventListener('click', event => {
-      console.log(event)
+      if(!event.composedPath().includes(sortRef.current)) {
+        setOpen(false)
+      }
+      
     })
   }, [])
 	return (

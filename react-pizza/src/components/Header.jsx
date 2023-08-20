@@ -5,6 +5,10 @@ import Search from './Search'
   
 function Header() {
   const {items, totalPrice} = useSelector(state => state.cart);
+  const arrItems = useSelector(state => state.cart.items)
+  console.log(arrItems)
+  const totalCount =  arrItems.reduce((obj, item)=> obj+item.count, 0)
+  console.log(totalCount)
 	return (
 		<div className='header'>
 			<div className='container'>
@@ -51,7 +55,7 @@ function Header() {
 								strokeLinejoin='round'
 							/>
 						</svg>
-						<span>{items.length}</span>
+						<span>{totalCount}</span>
 					</Link>
 				</div>
 			</div>

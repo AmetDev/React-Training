@@ -30,7 +30,6 @@ const Home = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  //const [currentPage, setCurrentPage] = React.useState(1)
   const fakeArr = [
     [undefined],
     [undefined],

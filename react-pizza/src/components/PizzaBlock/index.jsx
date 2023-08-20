@@ -7,6 +7,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
   const cartItem = useSelector(state => state.cart.items.find((obj) => obj.id === id))
   const addedCount = cartItem ? cartItem.count :0;
   const typeNames = ['тонкое', 'традиционное']
+  const typeSizes = ['26 см.', '30 см.', '40 см.']
   const onClickAdd = () => {
     const item = {
       id,
@@ -14,7 +15,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
       price,
       imageUrl,
       type: typeNames[activeType],
-      size: activeSize,
+      size: typeSizes[activeSize],
     };
     dispath(addItem(item))
   }

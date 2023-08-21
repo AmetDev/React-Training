@@ -1,32 +1,24 @@
-import axios from 'axios'
-import qs from 'qs'
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { SearchContext } from '../App.js'
 import Catagories from '../components/Catagories.jsx'
 import PizzaSkeleton from '../components/PizzaBlock/Skeleton'
 import PizzaBlock from '../components/PizzaBlock/index.jsx'
-import Sort, { objName } from '../components/Sort.jsx'
+import Sort from '../components/Sort.jsx'
 import Pagination from '../components/pagination/index.jsx'
-import { setCaterId, setFilters } from '../components/redux/slices/filterSlice'
+import { setCaterId } from '../components/redux/slices/filterSlice'
+import { fetchPizzas } from '../components/redux/slices/pizzasSlice'
+
 const Home = () => {
-	const navigate = useNavigate()
-	const dispatch = useDispatch()
-
-	const { categoryId, sort, currentPage } = useSelector(state => state.filter)
-	const sortType = sort
-	const categoriesId = categoryId
-
 	const onClickCategory = id => {
 		dispatch(setCaterId(id))
 	}
-
+	const dispatch = useDispatch()
+	const categoriesId = useSelector(state => state.filter.categoryId)
 	const { searchValue } = React.useContext(SearchContext)
-	const [pizzas, setPizza] = React.useState([])
-	const [isLoading, setIsLoading] = React.useState(false)
-	const isSearch = useRef(false)
-	const isMounted = useRef(false)
+	const [currentPage, setCurrentPage] = React.useState(1)
+	const sortType = useSelector(state => state.filter.sort)
+	const { items, status } = useSelector(state => state.pizzas)
 
 	const fakeArr = [
 		[undefined],
@@ -35,76 +27,23 @@ const Home = () => {
 		[undefined],
 		[undefined],
 	]
-	//Если изменили параметры и был первый рендер
-	useEffect(() => {
-		if (isMounted.current) {
-			const queryString = qs.stringify({
-				sortPropety: sortType.orderProperty,
-				categoriesId,
-				currentPage,
-			})
-			navigate(`?${queryString}`)
-		}
-		isMounted.current = true
-	}, [categoriesId, sortType.orderProperty, currentPage])
-	//Если был первый рендер, то проверяем URL параметры и сохраняем в редаксе
-	useEffect(() => {
-		if (window.location.search) {
-			const params = qs.parse(window.location.search.substring(1))
-			const sort = objName.find(
-				obj => obj.propertyObjName === params.propertyObjName
-			)
-
-			dispatch(
-				setFilters({
-					...params,
-					sort,
-				})
-			)
-			isSearch.current = true
-		}
-	}, [])
-	//
-	//
-	//Если был первый рендер, то запрашиваем пиццы
-	useEffect(() => {
-		window.scrollTo(0, 0)
-		if (!isSearch.current) {
-			fetchPizzas()
-		}
-		isSearch.current = false
-	}, [categoriesId, sort.orderProperty, searchValue, currentPage])
-
 	const searchsValue = searchValue ? `&search=${searchValue}` : ''
-	const fetchPizzas = () => {
-		setIsLoading(true)
-		axios
-			.get(
-				'https://64c4f551c853c26efada564f.mockapi.io/items?' +
-					`${categoriesId === 0 ? '' : `category=${categoriesId}`}` +
-					`&page=${currentPage}&limit=4` +
-					`&sortBy=${sortType.propertyObjName}&order=${sortType.orderProperty}` +
-					searchsValue
+	React.useEffect(() => {
+		const asyncfunc = async () => {
+			dispatch(
+				fetchPizzas({ currentPage, categoriesId, sortType, searchsValue })
 			)
-			.then(response => {
-				return response.data
-			})
-			.then(arr => {
-				setPizza(arr)
-				setIsLoading(false)
-			})
-
-		window.scrollTo(0, 0)
-	}
-
-	const pizzasFilter = pizzas.filter(obj => {
+		}
+		asyncfunc()
+	}, [categoriesId, sortType, searchValue, currentPage])
+	const pizzasFilter = items.filter(obj => {
 		return obj.title.toLowerCase().includes(searchValue.toLowerCase())
 	})
-
 	pizzasFilter.map(obj => {
 		return <PizzaBlock key={obj.id} {...obj} />
 	})
-
+	//
+	//
 	return (
 		<>
 			<div className='container'>
@@ -118,19 +57,29 @@ const Home = () => {
 				</div>
 				<h2 className='content__title'>Все пиццы</h2>
 				<div className='content__items'>
-					{isLoading
-						? fakeArr.map(obj => {
-								return <PizzaSkeleton key={obj.id} {...obj} />
-						  })
-						: pizzasFilter
-						? pizzasFilter.map(obj => {
-								return <PizzaBlock key={obj.id} {...obj} />
-						  })
-						: pizzas.map(obj => {
-								return <PizzaBlock key={obj.id} {...obj} />
-						  })}
+					{status === 'error' ? (
+						<div className='content__error-info'>
+							<h2>Произошла ошибка</h2>
+							<p>
+								К сожалению не удалось получить пиццы. Попробуйте повторить
+								попытку позже.
+							</p>
+						</div>
+					) : status === 'loading' ? (
+						fakeArr.map(obj => {
+							return <PizzaSkeleton key={obj.id} {...obj} />
+						})
+					) : pizzasFilter ? (
+						pizzasFilter.map(obj => {
+							return <PizzaBlock key={obj.id} {...obj} />
+						})
+					) : (
+						items.map(obj => {
+							return <PizzaBlock key={obj.id} {...obj} />
+						})
+					)}
 				</div>
-				<Pagination />
+				<Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
 			</div>
 		</>
 	)

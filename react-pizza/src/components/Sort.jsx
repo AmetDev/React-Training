@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSortType } from "./redux/slices/filterSlice";
+import { selectroSort, setSortType } from "./redux/slices/filterSlice";
 
 export const objName = [
   {
@@ -42,7 +42,7 @@ export const objName = [
 ];
 function Sort() {
   const [open, setOpen] = React.useState(false);
-  const { sort } = useSelector((state) => state.filter);
+  const sort= useSelector(selectroSort);
   const dispatch = useDispatch();
   const OnClickItem = (el) => {
     dispatch(setSortType(el));

@@ -15,6 +15,7 @@ import {
   setCurrentPage,
 } from "../components/redux/slices/filterSlice";
 import { fetchPizzas } from "../components/redux/slices/pizzasSlice";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const onClickCategory = (id) => {
@@ -22,8 +23,8 @@ const Home = () => {
   };
   const dispatch = useDispatch();
   const categoriesId = useSelector(selectCategoryId);
-  const searchValue = useSelector(selectorSearchValue)
-  const currentPage = useSelector(selectorCurrentPage) 
+  const searchValue = useSelector(selectorSearchValue);
+  const currentPage = useSelector(selectorCurrentPage);
   const sortType = useSelector(selectorSortType);
   const { items, status } = useSelector(selectorPizzas);
 
@@ -92,7 +93,10 @@ const Home = () => {
               })
             )}
         </div>
-        <Pagination currentPage={currentPage} setCurrentPage={dispatch(setCurrentPage)} />
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={dispatch(setCurrentPage)}
+        />
       </div>
     </>
   );

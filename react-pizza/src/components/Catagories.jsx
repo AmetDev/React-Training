@@ -1,6 +1,8 @@
 import React from 'react'
+import {useWhyDidYouUpdate} from "ahooks";
 
 function Catagories({value, onClickCategory}) {
+	useWhyDidYouUpdate('Catagories', {value, onClickCategory})
 	const categories = [
 		'Все',
 		'Мясные',

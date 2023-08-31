@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Catagories from "../components/Catagories.jsx";
 import PizzaSkeleton from "../components/PizzaBlock/Skeleton";
@@ -18,9 +18,9 @@ import { fetchPizzas } from "../components/redux/slices/pizzasSlice";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const onClickCategory = (id) => {
+  const onClickCategory = useCallback((id) => {
     dispatch(setCaterId(id));
-  };
+  }, []);
   const dispatch = useDispatch();
   const categoriesId = useSelector(selectCategoryId);
   const searchValue = useSelector(selectorSearchValue);
@@ -59,7 +59,7 @@ const Home = () => {
         <div className="content__top">
           <Catagories
             value={categoriesId}
-            onClickCategory={(i) => onClickCategory(i)}
+            onClickCategory={onClickCategory}
           />
           <Sort />
         </div>

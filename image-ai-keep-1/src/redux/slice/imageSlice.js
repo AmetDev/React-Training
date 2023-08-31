@@ -1,13 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-export const fetchImages = createAsyncThunk('images/fetchImages', async () => {
-	console.log('aaa')
-	const { data } = await axios.get(
-		'https://jsonplaceholder.typicode.com/photos?_limit=10&_page=1'
-	)
-	return data
-})
+export const fetchImages = createAsyncThunk(
+	'images/fetchImages',
+	async ({ counter }) => {
+		console.log(counter)
+		const { data } = await axios.get(
+			'https://jsonplaceholder.typicode.com/photos?_limit=10&_page=' + counter
+		)
+		return data
+	}
+)
 
 export const imageSLice = createSlice({
 	name: 'images',
@@ -15,8 +18,13 @@ export const imageSLice = createSlice({
 		images: [],
 		isLoading: false,
 		error: null,
+		counter: 0,
 	},
-	reducers: {},
+	reducers: {
+		setCounter(state) {
+			state.counter += 1
+		},
+	},
 	extraReducers: builder => {
 		builder
 			.addCase(fetchImages.pending, state => {
@@ -24,7 +32,7 @@ export const imageSLice = createSlice({
 			})
 			.addCase(fetchImages.fulfilled, (state, action) => {
 				state.isLoading = false
-				state.images = action.payload
+				state.images = [...state.images, ...action.payload]
 			})
 			.addCase(fetchImages.rejected, (state, action) => {
 				state.isLoading = false
@@ -33,3 +41,4 @@ export const imageSLice = createSlice({
 			})
 	},
 })
+export const { setCounter } = imageSLice.actions

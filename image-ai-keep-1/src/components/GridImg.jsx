@@ -1,20 +1,30 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchImages } from '../redux/slice/imageSlice'
+import { fetchImages, setCounter } from '../redux/slice/imageSlice'
+import ImageItem from './ImageItem'
 
 const GridImg = () => {
+	const imgFunc = (bool, element) => {
+		setSwitcher(bool)
+		setCurrentElement(element)
+	}
 	const dispatch = useDispatch()
+	const [switcher, setSwitcher] = useState(false)
+	const [currentElement, setCurrentElement] = useState({})
+	const { counter, images, error, isLoading } = useSelector(
+		state => state.images
+	)
 
-	const { images, error, isLoading } = useSelector(state => state.images)
-	console.log(images, error, isLoading)
+	console.log(counter, images, error, isLoading)
 	useEffect(() => {
 		const func = async () => {
-			await dispatch(fetchImages())
+			await dispatch(fetchImages({ counter }))
 		}
 		func()
-	}, [])
+	}, [counter])
 	return (
 		<>
+			{switcher && <ImageItem {...currentElement} />}
 			{isLoading ? (
 				<div>загрузка...{isLoading}</div>
 			) : error ? (
@@ -22,22 +32,26 @@ const GridImg = () => {
 			) : images ? (
 				<ul className='grid grid-cols-3 gap-4 mt-5'>
 					{images.map(el => (
-						<li className='w-[454px] h-[460px] m-2 rounded-[50px]' key={el.id}>
-							<img src={el.url} alt={el.title} />
+						<li
+							onClick={() => imgFunc(true, el)}
+							className='w-[454px] h-[460px] m-2'
+							key={el.id}
+						>
+							<img className='rounded-[50px]' src={el.url} alt={el.title} />
 						</li>
 					))}
 				</ul>
 			) : (
 				''
 			)}
-			{/*<div className="grid grid-cols-3 gap-4 mt-5">
-        <div className="bg-white w-[454px] h-[460px] m-2 rounded-[50px]"></div>
-        <div className="bg-white w-[454px] h-[460px] m-2 rounded-[50px]"></div>
-        <div className="bg-white w-[454px] h-[460px] m-2 rounded-[50px]"></div>
-        <div className="bg-white w-[454px] h-[460px] m-2 rounded-[50px]"></div>
-        <div className="bg-white w-[454px] h-[460px] m-2 rounded-[50px]"></div>
-        <div className="bg-white w-[454px] h-[460px] m-2 rounded-[50px]"></div>
-      </div>*/}
+
+			<button
+				onClick={() => dispatch(setCounter())}
+				className='bg-white w-16 h-8'
+				type='button'
+			>
+				<h1>MORE...</h1>
+			</button>
 		</>
 	)
 }

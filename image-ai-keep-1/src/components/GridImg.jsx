@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchImages, setCounter } from '../redux/slice/imageSlice'
-import ImageItem from './ImageItem'
+import { fetchImages, setCounter, setRef } from '../redux/slice/imageSlice'
+
 
 const GridImg = () => {
 	const imgFunc = (bool, element) => {
@@ -11,17 +11,40 @@ const GridImg = () => {
 	const dispatch = useDispatch()
 	const [switcher, setSwitcher] = useState(false)
 	const [currentElement, setCurrentElement] = useState({})
-	const { counter, images, error, isLoading } = useSelector(
+	const { counter, images, error, isLoading, refClick } = useSelector(
 		state => state.images
 	)
-
-	console.log(counter, images, error, isLoading)
 	useEffect(() => {
 		const func = async () => {
 			await dispatch(fetchImages({ counter }))
 		}
 		func()
 	}, [counter])
+	const nameRef = useRef('initialstate')
+	useEffect(()=>{
+		const handleCLick= (event) => {
+			if(!event.composedPath().includes(nameRef.current)) {
+				setSwitcher(false)
+				console.log(nameRef)
+
+				console.log("hello")
+			}
+		}
+		document.body.addEventListener("click", handleCLick)
+	})
+	const ImageItem = currentElement => {
+		return (
+			<div >
+				<div   className='bg-white flex '>
+					<img src={currentElement.url} alt='' />
+				<div>
+	<div className="m-5">{currentElement.title}</div>
+			</div>	
+		</div>
+			</div>
+		)
+	}
+
 	return (
 		<>
 			{switcher && <ImageItem {...currentElement} />}
@@ -30,12 +53,15 @@ const GridImg = () => {
 			) : error ? (
 				<div>{error}</div>
 			) : images ? (
-				<ul className='grid grid-cols-3 gap-4 mt-5'>
+				<ul  className='grid grid-cols-3 gap-4 mt-5'>
 					{images.map(el => (
 						<li
+						   
 							onClick={() => imgFunc(true, el)}
 							className='w-[454px] h-[460px] m-2'
+							
 							key={el.id}
+							ref={nameRef}
 						>
 							<img className='rounded-[50px]' src={el.url} alt={el.title} />
 						</li>

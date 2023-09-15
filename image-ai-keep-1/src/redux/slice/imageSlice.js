@@ -19,11 +19,15 @@ export const imageSLice = createSlice({
 		isLoading: false,
 		error: null,
 		counter: 0,
+		refClick: '',
 	},
 	reducers: {
 		setCounter(state) {
 			state.counter += 1
 		},
+		setRef(state, action) {
+			state.refClick = action.payload;
+		}
 	},
 	extraReducers: builder => {
 		builder
@@ -41,4 +45,4 @@ export const imageSLice = createSlice({
 			})
 	},
 })
-export const { setCounter } = imageSLice.actions
+export const { setCounter, setRef } = imageSLice.actions

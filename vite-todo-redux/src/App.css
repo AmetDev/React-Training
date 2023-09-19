@@ -5,7 +5,7 @@
 }
 
 .elementsList {
-	width: 200px;
+	width: 500px;
 	background-color: lightsteelblue;
 	display: flex;
 	justify-content: space-between;

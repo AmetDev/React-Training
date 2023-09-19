@@ -1,11 +1,14 @@
+import DeleteIcon from '@mui/icons-material/Delete'
 import { useDispatch, useSelector } from 'react-redux'
 import './App.css'
-import InputFileUpload from './components/Button'
+import ButtonBlue from './components/Button'
 import { setArrText, setWriteText } from './redux/ListReducer'
+
 function App() {
 	const dispatch = useDispatch()
 	const { writeText, ArrText } = useSelector(state => state.rootSlice)
 	const funcOnSubmit = () => {
+		console.log('hello')
 		dispatch(setArrText(writeText))
 	}
 	return (
@@ -16,7 +19,11 @@ function App() {
 					type='text'
 					placeholder='write some text...'
 				/>
-				<button onClick={() => funcOnSubmit()}>click</button>
+				<ButtonBlue
+					contain={'add'}
+					onClick={() => funcOnSubmit()}
+					icon={<DeleteIcon />}
+				/>
 			</div>
 			<div>
 				<ul>
@@ -27,7 +34,7 @@ function App() {
 								<div>
 									<button className='btnDelete'>x</button>
 									<button className='btnDelete'>RED</button>
-									<InputFileUpload />
+									<ButtonBlue contain={'DELETE'} icon={<DeleteIcon />} />
 									<input type='checkbox' id='scales' name='scales' />
 								</div>
 							</div>

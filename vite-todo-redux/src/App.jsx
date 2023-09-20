@@ -1,7 +1,12 @@
 import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import { Button, ThemeProvider } from '@mui/material'
+import Icon from '@mui/material/Icon'
+import TextField from '@mui/material/TextField'
+import { green, red } from '@mui/material/colors'
+import { createTheme } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import './App.css'
-import ButtonBlue from './components/Button'
 import { setArrText, setWriteText } from './redux/ListReducer'
 
 function App() {
@@ -11,38 +16,78 @@ function App() {
 		console.log('hello')
 		dispatch(setArrText(writeText))
 	}
+
+	const theme = createTheme({
+		palette: {
+			mode: 'light',
+			secondary: {
+				main: red[500],
+			},
+
+			third: {
+				main: green[500],
+			},
+		},
+	})
+
+	const deleteElement = e => {
+		console.log(e)
+	}
+
 	return (
-		<>
-			<div className='addTodo'>
-				<input
-					onChange={event => dispatch(setWriteText(event.target.value))}
-					type='text'
-					placeholder='write some text...'
-				/>
-				<ButtonBlue
-					contain={'add'}
-					onClick={() => funcOnSubmit()}
-					icon={<DeleteIcon />}
-				/>
-			</div>
-			<div>
-				<ul>
-					{ArrText.map(el => {
-						return (
-							<div className='elementsList' key={el}>
-								<div>{el}</div>
-								<div>
-									<button className='btnDelete'>x</button>
-									<button className='btnDelete'>RED</button>
-									<ButtonBlue contain={'DELETE'} icon={<DeleteIcon />} />
-									<input type='checkbox' id='scales' name='scales' />
+		<ThemeProvider theme={theme}>
+			<div className=''>
+				<div className='addTodo'>
+					<TextField
+						id='outlined-basic'
+						label='Write 1th task...'
+						variant='outlined'
+						onChange={event => dispatch(setWriteText(event.target.value))}
+					/>
+
+					<Button
+						onClick={() => funcOnSubmit()}
+						component='label'
+						variant='contained'
+						startIcon={<Icon>add_circle</Icon>}
+					>
+						ADD
+					</Button>
+				</div>
+				<div>
+					<ul>
+						{ArrText.map(el => {
+							return (
+								<div className='elementsList' key={el}>
+									<div>{el}</div>
+									<div>
+										<Button
+											color='third'
+											component='label'
+											variant='contained'
+											startIcon={<EditIcon />}
+											className='btnDelete'
+										>
+											EDIT
+										</Button>
+
+										<Button
+											color='secondary'
+											component='label'
+											variant='contained'
+											startIcon={<DeleteIcon />}
+											onClick={e => deleteElement(e)}
+										>
+											DELETE
+										</Button>
+									</div>
 								</div>
-							</div>
-						)
-					})}
-				</ul>
+							)
+						})}
+					</ul>
+				</div>
 			</div>
-		</>
+		</ThemeProvider>
 	)
 }
 

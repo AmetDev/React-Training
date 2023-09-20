@@ -1,12 +1,22 @@
 .addTodo {
 	display: flex;
+	justify-content: center;
 }
 .btnDelete {
 }
 
 .elementsList {
+	border-radius: 7px;
+	margin-top: 5px;
 	width: 500px;
 	background-color: lightsteelblue;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	background-color: rgb(81, 83, 83);
 }

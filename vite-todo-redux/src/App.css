@@ -1,6 +1,7 @@
 .addTodo {
 	display: flex;
 	justify-content: center;
+	cursor: hover;
 }
 .btnDelete {
 }
@@ -13,10 +14,18 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	cursor: pointer;
+}
+.elementsList:hover {
+	background-color: rgb(96, 120, 151);
 }
 
 body {
 	display: flex;
 	justify-content: center;
 	background-color: rgb(81, 83, 83);
+}
+
+.fieldStyle {
+	cursor: hover;
 }
